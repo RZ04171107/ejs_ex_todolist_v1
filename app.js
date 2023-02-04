@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-const plans = ['Buy food', 'Cook food', 'Eat food'];
+const plans = ['Buy food', 'Cook food', 'Eat food', 'Coding'];
 
 app.set('view engine', 'ejs');
 
@@ -11,6 +11,7 @@ app.use(
     extended: true,
   })
 );
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   const today = new Date();
