@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+const plans = ['Buy food', 'Cook food', 'Eat food'];
+
+app.set('view engine', 'ejs');
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -9,7 +13,25 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.send('This is the home page');
+  const today = new Date();
+
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+
+  const day = today.toLocaleString('en-US', options);
+
+  res.render('list', { kindOfDay: day, newPlans: plans });
+});
+
+app.post('/', (req, res) => {
+  //console.log(req.body);
+  const p = req.body.plan;
+  plans.push(p);
+  res.redirect('/');
 });
 
 app.listen('3000', () => {
